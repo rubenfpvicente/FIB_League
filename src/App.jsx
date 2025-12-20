@@ -66,12 +66,14 @@ function App() {
 
     jogos.slice(0, getQtdJogos()).forEach((jogo, index) => {
       if (!jogo.time1 || !jogo.time2) return;
+      
       if (isGrupos && index % 2 === 0) {
         output += `*Grupo ${["A","B","C","D","E","F"][Math.floor(index/2)]}*\n\n`;
       }
 
       const f = (t) => ({ flag: t.split(' ')[0], nome: t.replace(t.split(' ')[0], '').trim() });
       const t1 = f(jogo.time1); const t2 = f(jogo.time2);
+      
       const r1 = calcular(jogo.equipe1Palpites, jogo.wo1, 0, 4);
       const r2 = calcular(jogo.equipe2Palpites, jogo.wo2, 0, 4);
 
@@ -80,31 +82,40 @@ function App() {
 
       let houveP = isVolta && aggN1 === aggN2 && resArray.length > 5;
       let rp1 = { gols: 0, lista: [] }, rp2 = { gols: 0, lista: [] };
+      
       if (houveP) {
         rp1 = calcular(jogo.equipe1Palpites, jogo.wo1, 5, 7);
         rp2 = calcular(jogo.equipe2Palpites, jogo.wo2, 5, 7);
       }
 
       let finAgg1 = aggN1 + rp1.gols, finAgg2 = aggN2 + rp2.gols;
+      
       let n1 = t1.nome, n2 = t2.nome, nP1 = t1.nome, nP2 = t2.nome;
 
       if (isVolta) {
         if (houveP) {
-          if (finAgg1 > finAgg2) nP1 = `*${t1.nome}*`; else if (finAgg2 > finAgg1) nP2 = `*${t2.nome}*`;
+          if (finAgg1 > finAgg2) nP1 = `*${t1.nome}*`; 
+          else if (finAgg2 > finAgg1) nP2 = `*${t2.nome}*`;
         } else {
-          if (aggN1 > aggN2) n1 = `*${t1.nome}*`; else if (aggN2 > aggN1) n2 = `*${t2.nome}*`;
+          if (aggN1 > aggN2) n1 = `*${t1.nome}*`; 
+          else if (aggN2 > aggN1) n2 = `*${t2.nome}*`;
         }
+      }
+
+      // MONTAGEM DA LINHA DE PLACAR
+      if (isVolta) {
         output += `${t1.flag} ${n1} *${r1.gols}-${r2.gols}* ${n2} ${t2.flag} (${aggN1}-${aggN2})\n`;
       } else {
-        if (r1.gols > r2.gols) n1 = `*${t1.nome}*`; else if (r2.gols > r1.gols) n2 = `*${t2.nome}*`;
-        output += `${t1.flag} ${n1} *${r1.gols}-${r2.gols}* ${n2} ${t2.flag}\n`;
+        output += `${t1.flag} ${t1.nome} *${r1.gols}-${r2.gols}* ${t2.nome} ${t2.flag}\n`;
       }
 
       output += `⚽${t1.flag}: ${r1.lista.join(', ') || '❌'}\n⚽${t2.flag}: ${r2.lista.join(', ') || '❌'}\n`;
+
       if (houveP) {
         output += `\n*Prorrogação*\n${t1.flag} ${nP1} *${rp1.gols}-${rp2.gols}* ${nP2} ${t2.flag} (${finAgg1}-${finAgg2})\n`;
         output += `⚽${t1.flag}: ${rp1.lista.join(', ') || '❌'}\n⚽${t2.flag}: ${rp2.lista.join(', ') || '❌'}\n`;
       }
+      
       output += `\n`;
     });
     return output.trim();

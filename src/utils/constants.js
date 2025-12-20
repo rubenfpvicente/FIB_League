@@ -1,5 +1,5 @@
 export const TIMES_L2 = 
-["🇮🇹 AC Milan", "🇳🇱 Ajax", "🇧🇪 Anderlecht", "🇽🇪 Aston Villa", "🇩🇪 Bayern", "🇩🇪 Borussia Dortmund", "🇵🇹 Braga", "🇮🇹 Como", "🇰🇿 FC Astana", "🇵🇹 FC Porto", "🇫🇴 KÍ Klaksvík", "🇽🇪 Manchester City", "🇫🇷 Marseille", "🇫🇷 Monaco", "🇮🇹 Palermo", "🇮🇹 Pescara", "🇵🇹 Rio Ave", "🇪🇸 Sevilla", "🇽🇼 Swansea City", "🇽🇪 West Ham"
+["🇮🇹 AC Milan", "🇳🇱 Ajax", "🇧🇪 Anderlecht", "🇽🇪 Aston Villa", "🇩🇪 Bayern", "🇩🇪 Borussia Dortmund", "🇵🇹 Braga", "🇮🇹 Como", "🇰🇿 FC Astana", "🇵🇹 FC Porto", "🇫🇴 KÍ Klaksvík", "🇽🇪 Manchester City", "🇫🇷 Marseille", "🇫🇷 Monaco", "🇮🇹 Palermo", "🇫🇷 Paris Saint-Germain", "🇵🇹 Rio Ave", "🇪🇸 Sevilla", "🇽🇼 Swansea City", "🇽🇪 West Ham"
 ].sort();
 
 export const TIMES_L3 = [
