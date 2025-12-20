@@ -195,3 +195,30 @@ textarea {
     position: static;
   }
 }
+
+.vs-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.ida-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ida-input input {
+  width: 40px;
+  text-align: center;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.ida-input small {
+  font-size: 0.6rem;
+  color: #666;
+  font-weight: bold;
+}
