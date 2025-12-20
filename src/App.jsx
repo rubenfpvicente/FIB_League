@@ -60,31 +60,47 @@ function App() {
 
   const getQtdJogos = () => {
     if (competicao === "L2") return 10;
-    if (rodada === "Final") return 1;
-    if (rodada.includes("Semifinais")) return 2;
-    if (rodada.includes("Quartas")) return 4;
-    if (rodada.includes("Oitavas")) return 8;
-    return 14;
+    if (competicao === "EL") {
+      if (!isNaN(rodada) && parseInt(rodada) <= 5) return 12; // 6 Grupos x 2 jogos
+      if (rodada === "Final") return 1;
+      if (rodada.includes("Semifinais")) return 2;
+      if (rodada.includes("Quartas")) return 4;
+      if (rodada.includes("Oitavas")) return 8;
+    }
+    return 10;
   };
 
 useEffect(() => {
     const resArray = resultadoGlobal.split('/').map(s => s.trim());
     const isEliminatoriaVolta = rodada.includes("Volta") || rodada === "Final";
+    const isELGrupos = competicao === "EL" && !isNaN(rodada) && parseInt(rodada) <= 5;
     
-    let titulo = competicao === "L2" ? "*FIB League 2*" : "*FIB Europa League*";
-    let subTitulo = (competicao === "EL" && !isNaN(rodada) && parseInt(rodada) <= 5) 
-                    ? `*Fase de Grupos - Rodada ${rodada}*` : `*Rodada ${rodada}*`;
+    // Títulos com decorações
+    let titulo = competicao === "L2" ? "*🇵🇭 FIB League 2 🇵🇭*" : "🇪🇺⚜ *FIB Europa League* ⚜🇪🇺";
+    let subTitulo = isELGrupos ? `*Fase de Grupos - Rodada ${rodada}*` : `*Rodada ${rodada}*`;
 
     let output = `${titulo}\n\n${subTitulo}\n\n`;
 
-    jogos.slice(0, getQtdJogos()).forEach((jogo) => {
+    const qtdAtiva = getQtdJogos();
+    
+    jogos.slice(0, qtdAtiva).forEach((jogo, index) => {
       if (!jogo.time1 || !jogo.time2) return;
+
+      // LÓGICA DE GRUPOS (Apenas na Fase de Grupos da EL)
+      if (isELGrupos) {
+        // Insere *Grupo X* a cada 2 jogos (index 0, 2, 4, 6, 8, 10)
+        if (index % 2 === 0) {
+          const grupos = ["A", "B", "C", "D", "E", "F"];
+          const letraGrupo = grupos[Math.floor(index / 2)];
+          output += `*Grupo ${letraGrupo}*\n\n`;
+        }
+      }
 
       const f = (t) => ({ flag: t.split(' ')[0], nome: t.replace(t.split(' ')[0], '').trim() });
       const t1 = f(jogo.time1); const t2 = f(jogo.time2);
 
       const calcularGols = (txt, wo, startIndex, endIndex) => {
-        if (wo) return { gols: 0, lista: [] };
+        if (wo) return { gols: 0, lista: ["*WO*"] };
         const textoLimpo = extrairPalpitesDoBloco(txt);
         const linhas = textoLimpo.split('\n').map(l => l.trim()).filter(l => l !== "");
         let gols = 0; let lista = [];
@@ -105,16 +121,13 @@ useEffect(() => {
         return { gols, lista };
       };
 
-      // 1. TEMPO NORMAL (Palpites 1 a 5)
       const res1 = calcularGols(jogo.equipe1Palpites, jogo.wo1, 0, 4);
       const res2 = calcularGols(jogo.equipe2Palpites, jogo.wo2, 0, 4);
 
-      // 2. CÁLCULO DO AGREGADO DO TEMPO NORMAL
       const [ida1, ida2] = jogo.resultadoIda.split('-').map(n => parseInt(n) || 0);
       const aggNormal1 = res1.gols + ida1;
       const aggNormal2 = res2.gols + ida2;
 
-      // 3. VERIFICAÇÃO DE PRORROGAÇÃO (Palpites 6 a 8)
       let finalAgg1 = aggNormal1;
       let finalAgg2 = aggNormal2;
       let houveProrrogacao = false;
@@ -129,39 +142,36 @@ useEffect(() => {
         finalAgg2 = aggNormal2 + resP2.gols;
       }
 
-      // 4. LÓGICA DE NOMES (NEGRITO)
-      let nomeExibicao1 = t1.nome;
-      let nomeExibicao2 = t2.nome;
-      let nomeExtra1 = t1.nome;
-      let nomeExtra2 = t2.nome;
+      let nE1 = t1.nome; let nE2 = t2.nome;
+      let nP1 = t1.nome; let nP2 = t2.nome;
 
       if (isEliminatoriaVolta) {
         if (houveProrrogacao) {
-          // Na prorrogação, o negrito só vai para a seção de baixo
-          if (finalAgg1 > finalAgg2) nomeExtra1 = `*${t1.nome}*`;
-          else if (finalAgg2 > finalAgg1) nomeExtra2 = `*${t2.nome}*`;
+          if (finalAgg1 > finalAgg2) nP1 = `*${t1.nome}*`;
+          else if (finalAgg2 > finalAgg1) nP2 = `*${t2.nome}*`;
         } else {
-          // Se não houve prorrogação, o vencedor do tempo normal já ganha negrito
-          if (aggNormal1 > aggNormal2) nomeExibicao1 = `*${t1.nome}*`;
-          else if (aggNormal2 > aggNormal1) nomeExibicao2 = `*${t2.nome}*`;
+          if (aggNormal1 > aggNormal2) nE1 = `*${t1.nome}*`;
+          else if (aggNormal2 > aggNormal1) nE2 = `*${t2.nome}*`;
         }
+      } else {
+        // Se for fase de grupos ou ida, negrita o vencedor do jogo atual
+        if (res1.gols > res2.gols) nE1 = `*${t1.nome}*`;
+        else if (res2.gols > res1.gols) nE2 = `*${t2.nome}*`;
       }
 
-      // 5. MONTAGEM DO TEXTO - TEMPO NORMAL
+      // MONTAGEM FINAL
       if (isEliminatoriaVolta) {
-        output += `${t1.flag} ${nomeExibicao1} *${res1.gols}-${res2.gols}* ${nomeExibicao2} ${t2.flag} (${aggNormal1}-${aggNormal2})\n`;
+        output += `${t1.flag} ${nE1} *${res1.gols}-${res2.gols}* ${nE2} ${t2.flag} (${aggNormal1}-${aggNormal2})\n`;
       } else {
-        // Formato padrão para League 2 ou Ida (tudo em negrito na linha do placar)
-        output += `${t1.flag} ${t1.nome} *${res1.gols}-${res2.gols}* ${t2.nome} ${t2.flag}\n`;
+        output += `${t1.flag} ${nE1} *${res1.gols}-${res2.gols}* ${nE2} ${t2.flag}\n`;
       }
       
       output += `⚽${t1.flag}: ${res1.lista.join(', ') || '❌'}\n`;
       output += `⚽${t2.flag}: ${res2.lista.join(', ') || '❌'}\n`;
 
-      // 6. MONTAGEM DO TEXTO - PRORROGAÇÃO
       if (houveProrrogacao) {
         output += `\n*Prorrogação*\n`;
-        output += `${t1.flag} ${nomeExtra1} *${resP1.gols}-${resP2.gols}* ${nomeExtra2} ${t2.flag} (${finalAgg1}-${finalAgg2})\n`;
+        output += `${t1.flag} ${nP1} *${resP1.gols}-${resP2.gols}* ${nP2} ${t2.flag} (${finalAgg1}-${finalAgg2})\n`;
         output += `⚽${t1.flag}: ${resP1.lista.join(', ') || '❌'}\n`;
         output += `⚽${t2.flag}: ${resP2.lista.join(', ') || '❌'}\n`;
       }
