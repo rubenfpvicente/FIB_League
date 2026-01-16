@@ -10,9 +10,7 @@ export const TIMES_L4 = [
   "🇪🇸 Barcelona", "🇽🇪 Corinthian-Casuals", "🇵🇹 Fátima", "🇹🇷 Fenerbahçe", "🇮🇹 Fiorentina", "🇮🇹 Internazionale", "🇮🇹 Juventus", "🇦🇲 Pyunik Yerevan", "🇪🇸 Real Bétis", "🇪🇸 Real Madrid", "🇽🇪 Southampton", "🇩🇪 St. Pauli", "🇪🇸 Villarreal", "🇽🇪 Wolverhampton"
 ];
 
-
-export const TIMES_EL = [ 
-  "🇬🇷 AEK Athens", "🇮🇹 AS Roma", "🇳🇴 Bodø/Glimt", "🇵🇹 Braga", "🇽🇪 Chelsea", "🇮🇹 Chievo Verona", "🇩🇰 Copenhagen", "🇽🇪 Derby County", "🇽🇪 Dundee FC", "🇭🇺 Ferencváros", "🇹🇷 Galatasaray", "🇮🇹 Internazionale", "🇫🇴 KÍ Klaksvík", "🇽🇪 Liverpool", "🇫🇷 Marseille", "🇽🇪 Millwall"
+export const TIMES_EL = [ "🇬🇷 AEK Athens", "🇮🇹 AS Roma", "🇳🇴 Bodø/Glimt", "🇵🇹 Braga", "🇽🇪 Chelsea", "🇮🇹 Chievo Verona", "🇩🇰 Copenhagen", "🇽🇪 Derby County", "🇽🇪 Dundee FC", "🇭🇺 Ferencváros", "🇹🇷 Galatasaray", "🇮🇹 Internazionale", "🇫🇴 KÍ Klaksvík", "🇽🇪 Liverpool", "🇫🇷 Marseille", "🇽🇪 Millwall", "🇵🇹 Rio Ave", "🇪🇸 Real Bétis", "🇪🇸 Real Madrid", "🇮🇹 Parma", "🇦🇲 Pyunik Yerevan", "🇺🇦 Shakhtar Donetsk", "🇲🇩 Sheriff Tiraspol", "🇪🇸 Sevilla", "🇽🇼 Swansea City", "🇩🇪 Werder Bremen", "🇽🇪 West Ham", "🇽🇪 Wolverhampton" 
 ];
 
 export const RODADAS_EL = [
