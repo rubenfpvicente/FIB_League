@@ -13,6 +13,17 @@ export const TIMES_L4 = [
 export const TIMES_EL = [ "🇬🇷 AEK Athens", "🇮🇹 AS Roma", "🇳🇴 Bodø/Glimt", "🇵🇹 Braga", "🇽🇪 Chelsea", "🇮🇹 Chievo Verona", "🇩🇰 Copenhagen", "🇽🇪 Derby County", "🇽🇪 Dundee FC", "🇭🇺 Ferencváros", "🇹🇷 Galatasaray", "🇮🇹 Internazionale", "🇫🇴 KÍ Klaksvík", "🇽🇪 Liverpool", "🇫🇷 Marseille", "🇽🇪 Millwall", "🇵🇹 Rio Ave", "🇪🇸 Real Bétis", "🇪🇸 Real Madrid", "🇮🇹 Parma", "🇦🇲 Pyunik Yerevan", "🇺🇦 Shakhtar Donetsk", "🇲🇩 Sheriff Tiraspol", "🇪🇸 Sevilla", "🇽🇼 Swansea City", "🇩🇪 Werder Bremen", "🇽🇪 West Ham", "🇽🇪 Wolverhampton" 
 ];
 
+export const TIMES_CUP = [ "🇬🇷 AEK Athens", "🇧🇪 Anderlecht", "🇽🇪 Aston Villa", "🇨🇭 Basel", "🇵🇹 Belenenses", "🇳🇴 Bodø/Glimt", "🇩🇪 Borussia Dortmund", "🇽🇸 Celtic", "🇪🇸 Celta de Vigo", "🇽🇪 Chelsea", "🇽🇪 Corinthian-Casuals", "🇩🇰 Copenhagen", "🇽🇪 Derby County", "🇰🇿 FC Astana", "🇭🇺 Ferencváros", "🇹🇷 Galatasaray", "🇩🇪 Hamburger SV", "🇮🇹 Internazionale", "🇮🇹 Juventus", "🇫🇴 KÍ Klaksvík", "🇪🇸 Las Palmas", "🇫🇷 Lens", "🇽🇪 Manchester City", "🇽🇪 Millwall", "🇫🇷 Monaco", "🇫🇷 Pau FC", "🇪🇸 Real Bétis", "🇪🇸 Real Madrid", "🇽🇼 Swansea City", "🇪🇸 Villarreal", "🇩🇪 Werder Bremen", "🇽🇪 West Ham" ];
+
+export const RODADAS_CUP = [
+  "1", "2", "3", "4", "5",
+  "16 Avos - Ida", "16 Avos - Volta",
+  "Oitavas - Ida", "Oitavas - Volta", 
+  "Quartas - Ida", "Quartas - Volta", 
+  "Semifinais - Ida", "Semifinais - Volta", 
+  "Final"
+];
+
 export const RODADAS_EL = [
   "1", "2", "3", "4", "5",
   "Oitavas - Ida", "Oitavas - Volta", 

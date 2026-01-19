@@ -3,7 +3,7 @@ import './index.css';
 import { ConfigHeader } from './components/ConfigHeader';
 import { MatchCard } from './components/MatchCard';
 import { ResultPreview } from './components/ResultPreview';
-import { TIMES_L2, TIMES_L3,TIMES_L4, TIMES_EL } from './utils/constants';
+import { TIMES_L2, TIMES_L3,TIMES_L4, TIMES_EL, TIMES_CUP } from './utils/constants';
 import { formatarNomeJogador, extrairPalpitesDoBloco } from './utils/formatters';
 
 function App() {
@@ -23,28 +23,46 @@ function App() {
 
   const getQtdJogos = () => {
     const { competicao, rodada } = config;
-    if (competicao === "L2" || competicao === "L3" || competicao === "L4") return 10;
-    if (!isNaN(rodada) && parseInt(rodada) <= 5) return 12;
-    if (rodada === "Final") return 1;
-    if (rodada.includes("Semifinais")) return 2;
-    if (rodada.includes("Quartas")) return 4;
-    if (rodada.includes("Oitavas")) return 8;
+    if (["L2", "L3", "L4"].includes(competicao)) return 10;
+    
+    // Lógica da Cup
+    if (competicao === "CUP") {
+      if (!isNaN(rodada) && parseInt(rodada) <= 5) return 18; // 6 Grupos x 3 jogos
+      if (rodada.includes("16 Avos")) return 16;
+      if (rodada.includes("Oitavas")) return 8;
+      if (rodada.includes("Quartas")) return 4;
+      if (rodada.includes("Semifinais")) return 2;
+      if (rodada === "Final") return 1;
+    }
+
+    // Lógica da Europa League
+    if (competicao === "EL") {
+      if (!isNaN(rodada) && parseInt(rodada) <= 5) return 12; // 6 Grupos x 2 jogos
+      if (rodada.includes("Oitavas")) return 8;
+      if (rodada.includes("Quartas")) return 4;
+      if (rodada.includes("Semifinais")) return 2;
+      if (rodada === "Final") return 1;
+    }
     return 10;
   };
 
   // O "Motor" de Cálculo via useMemo (Performance)
   const resultadoFormatado = useMemo(() => {
     const { competicao, rodada, resultadoGlobal } = config;
-    const resArray = resultadoGlobal.split('/').map(s => s.trim());
+    const resArray = resultadoGlobal
+      .replace(/[()]/g, '/')
+      .split('/')
+      .map(s => s.trim())
+      .filter(s => s !== "");
     const isVolta = rodada.includes("Volta") || rodada === "Final";
     const isGrupos = competicao === "EL" && !isNaN(rodada) && parseInt(rodada) <= 5;
 
     let output = "";
-    if (competicao === "L2") output = "*🇵🇭 FIB League 2 🇵🇭*";
-    else if (competicao === "L3") output = "*🇵🇭 FIB League 3 🇵🇭*";
-    else if (competicao === "L4") output = "*🇵🇭 FIB League 4 🇵🇭*";
-    else output = "🇪🇺⚜ *FIB Europa League* ⚜🇪🇺";
-    output += `\n\n${isGrupos ? `*Fase de Grupos - Rodada ${rodada}*` : `*Rodada ${rodada}*`}\n\n`;
+    if (competicao === "EL") output = "🇪🇺⚜ *FIB Europa League* ⚜🇪🇺";
+    else if (competicao === "CUP") output = "🇵🇭 FIB Cup 🇵🇭";
+    else output = `*🇵🇭 FIB League ${competicao.replace("L", "")} 🇵🇭*`;
+
+    output += `\n\n${isGrupos ? `*Rodada ${rodada}*` : `*${rodada}*`}\n\n`;
 
     const calcular = (txt, wo, start, end) => {
       if (wo) return { gols: 0, lista: ["*WO*"] };
@@ -52,7 +70,11 @@ function App() {
       const linhas = texto.split('\n').map(l => l.trim()).filter(l => l !== "");
       let gols = 0; let lista = [];
       for (let i = 0; i < linhas.length; i += 2) {
-        const paps = (linhas[i+1] || "").split('/').map(s => s.trim());
+        const paps = (linhas[i+1] || "")
+          .replace(/[()]/g, '/')      // Substitui "(" e ")" por "/"
+          .split('/')                 // Divide pelas barras
+          .map(s => s.trim())         // Remove espaços de cada palpite
+          .filter(s => s !== "");  
         let pts = 0;
         paps.forEach((p, idx) => { if (idx >= start && idx <= end && resArray[idx] && p === resArray[idx]) pts++; });
         if (pts > 0) {
@@ -67,8 +89,15 @@ function App() {
     jogos.slice(0, getQtdJogos()).forEach((jogo, index) => {
       if (!jogo.time1 || !jogo.time2) return;
       
-      if (isGrupos && index % 2 === 0) {
-        output += `*Grupo ${["A","B","C","D","E","F"][Math.floor(index/2)]}*\n\n`;
+      if (isGrupos) {
+        // Europa League: Grupo muda a cada 2 jogos
+        if (competicao === "EL" && index % 2 === 0) {
+          output += `*Grupo ${["A","B","C","D","E","F"][Math.floor(index/2)]}*\n\n`;
+        }
+        // FIB Cup: Grupo muda a cada 3 jogos
+        if (competicao === "CUP" && index % 3 === 0) {
+          output += `*Grupo ${["A","B","C","D","E","F"][Math.floor(index/3)]}*\n\n`;
+        }
       }
 
       const f = (t) => ({ flag: t.split(' ')[0], nome: t.replace(t.split(' ')[0], '').trim() });
@@ -121,6 +150,17 @@ function App() {
     return output.trim();
   }, [config, jogos]);
 
+  const listaTimesAtual = () => {
+    switch(config.competicao) {
+      case "L2": return TIMES_L2;
+      case "L3": return TIMES_L3;
+      case "L4": return TIMES_L4;
+      case "EL": return TIMES_EL;
+      case "CUP": return TIMES_CUP;
+      default: return TIMES_L2;
+    }
+  };
+
   return (
     <div className="app-wrapper">
       <ConfigHeader config={config} setConfig={setConfig} />
@@ -130,12 +170,7 @@ function App() {
             <MatchCard 
               key={index} index={index} jogo={jogo} 
               onUpdate={handleUpdate} 
-              times={
-                config.competicao === "L2" ? TIMES_L2 : 
-                config.competicao === "L3" ? TIMES_L3 :
-                config.competicao === "L4" ? TIMES_L4 :
-                TIMES_EL
-              }
+              times={listaTimesAtual()}
               showIda={config.rodada.includes("Volta") || config.rodada === "Final"}
             />
           ))}
