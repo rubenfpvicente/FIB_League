@@ -62,7 +62,7 @@ function App() {
     else if (competicao === "CUP") output = "🇵🇭 FIB Cup 🇵🇭";
     else output = `*🇵🇭 FIB League ${competicao.replace("L", "")} 🇵🇭*`;
 
-    output += `\n\n${isGrupos ? `*Rodada ${rodada}*` : `*${rodada}*`}\n\n`;
+    output += `\n\n${isGrupos ? `*Rodada ${rodada}*` : `*Rodada ${rodada}*`}\n\n`;
 
     const calcular = (txt, wo, start, end) => {
       if (wo) return { gols: 0, lista: ["*WO*"] };
