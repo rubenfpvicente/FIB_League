@@ -1,4 +1,4 @@
-import { RODADAS_EL, RODADAS_CUP } from '../utils/constants';
+import { RODADAS_EL, RODADAS_CONF, RODADAS_CUP } from '../utils/constants';
 
 export const ConfigHeader = ({ config, setConfig }) => {
   const { competicao, rodada, resultadoGlobal } = config;
@@ -16,6 +16,7 @@ export const ConfigHeader = ({ config, setConfig }) => {
             <option value="L3">League 3</option>
             <option value="L4">League 4</option>
             <option value="EL">Europa League</option>
+            <option value="CONF">Conference League</option>
             <option value="CUP">FIB Cup</option>
           </select>
         </div>
@@ -30,6 +31,10 @@ export const ConfigHeader = ({ config, setConfig }) => {
             {/* Europa League */}
             {competicao === "EL" && (
               RODADAS_EL.map(r => <option key={r} value={r}>{isNaN(r) ? r : `Rodada ${r}`}</option>)
+            )}
+            {/* Conference League */}
+            {competicao === "CONF" && (
+              RODADAS_CONF.map(r => <option key={r} value={r}>{isNaN(r) ? r : `Rodada ${r}`}</option>)
             )}
             {/* FIB Cup */}
             {competicao === "CUP" && (

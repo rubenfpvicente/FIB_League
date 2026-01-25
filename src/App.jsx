@@ -3,13 +3,13 @@ import './index.css';
 import { ConfigHeader } from './components/ConfigHeader';
 import { MatchCard } from './components/MatchCard';
 import { ResultPreview } from './components/ResultPreview';
-import { TIMES_L2, TIMES_L3,TIMES_L4, TIMES_EL, TIMES_CUP } from './utils/constants';
+import { TIMES_L2, TIMES_L3,TIMES_L4, TIMES_EL,TIMES_CONF, TIMES_CUP } from './utils/constants';
 import { formatarNomeJogador, extrairPalpitesDoBloco } from './utils/formatters';
 
 function App() {
   const [config, setConfig] = useState({ competicao: "L2", rodada: "1", resultadoGlobal: "" });
   const [jogos, setJogos] = useState(
-    Array(14).fill(null).map(() => ({ 
+    Array(18).fill(null).map(() => ({ 
       time1: "", time2: "", equipe1Palpites: "", equipe2Palpites: "",
       wo1: false, wo2: false, resultadoIda: "0-0"
     }))
@@ -36,7 +36,7 @@ function App() {
     }
 
     // Lógica da Europa League
-    if (competicao === "EL") {
+    if (competicao === "EL" || competicao === "CONF") {
       if (!isNaN(rodada) && parseInt(rodada) <= 5) return 12; // 6 Grupos x 2 jogos
       if (rodada.includes("Oitavas")) return 8;
       if (rodada.includes("Quartas")) return 4;
@@ -59,6 +59,7 @@ function App() {
 
     let output = "";
     if (competicao === "EL") output = "🇪🇺⚜ *FIB Europa League* ⚜🇪🇺";
+    else if (competicao === "CONF") output = "🇪🇺⚜ *FIB Conference League* ⚜🇪🇺";
     else if (competicao === "CUP") output = "🇵🇭 FIB Cup 🇵🇭";
     else output = `*🇵🇭 FIB League ${competicao.replace("L", "")} 🇵🇭*`;
 
@@ -156,6 +157,7 @@ function App() {
       case "L3": return TIMES_L3;
       case "L4": return TIMES_L4;
       case "EL": return TIMES_EL;
+      case "CONF": return TIMES_CONF;
       case "CUP": return TIMES_CUP;
       default: return TIMES_L2;
     }
