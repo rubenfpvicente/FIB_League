@@ -63,7 +63,16 @@ function App() {
     else if (competicao === "CUP") output = "🇵🇭 FIB Cup 🇵🇭";
     else output = `*🇵🇭 FIB League ${competicao.replace("L", "")} 🇵🇭*`;
 
-    output += `\n\n${isGrupos ? `*Rodada ${rodada}*` : `*Rodada ${rodada}*`}\n\n`;
+    const ehRodadaNumerica = !isNaN(rodada);
+
+    let linhaSubtitulo = "";
+    if (ehRodadaNumerica) {
+      linhaSubtitulo = `*Rodada ${rodada}*`;
+    } else {
+      linhaSubtitulo = `*${rodada}*`; // Aqui entra "Oitavas - Ida", "Final", etc.
+    }
+
+    output += `\n\n${linhaSubtitulo}\n\n`;
 
     const calcular = (txt, wo, start, end) => {
       if (wo) return { gols: 0, lista: ["*WO*"] };

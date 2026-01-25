@@ -61,16 +61,16 @@ export const RODADAS_CUP = [
 
 export const RODADAS_EL = [
   "1", "2", "3", "4", "5",
-  "Oitavas - Ida", "Oitavas - Volta", 
-  "Quartas - Ida", "Quartas - Volta", 
+  "Oitavas de Final - Ida", "Oitavas de Final - Volta", 
+  "Quartas de Final - Ida", "Quartas de Final - Volta", 
   "Semifinais - Ida", "Semifinais - Volta", 
   "Final"
 ];
 
 export const RODADAS_CONF = [
   "1", "2", "3", "4", "5",
-  "Oitavas - Ida", "Oitavas - Volta", 
-  "Quartas - Ida", "Quartas - Volta", 
+  "Oitavas de Final - Ida", "Oitavas de Final - Volta", 
+  "Quartas de Final - Ida", "Quartas de Final - Volta", 
   "Semifinais - Ida", "Semifinais - Volta", 
   "Final"
 ];
