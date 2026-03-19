@@ -18,6 +18,7 @@ export const ConfigHeader = ({ config, setConfig }) => {
             <option value="EL">Europa League</option>
             <option value="CONF">Conference League</option>
             <option value="CUP">FIB Cup</option>
+            <option value="NL">Nations League</option>
           </select>
         </div>
 
@@ -27,6 +28,10 @@ export const ConfigHeader = ({ config, setConfig }) => {
             {/* Ligas de pontos corridos */}
             {(competicao === "L2" || competicao === "L3" || competicao === "L4") && (
               [...Array(38)].map((_, i) => <option key={i+1} value={i+1}>Rodada {i+1}</option>)
+            )}
+            {/* Ligas de pontos corridos */}
+            {(competicao === "NL") && (
+              [...Array(6)].map((_, i) => <option key={i+1} value={i+1}>Rodada {i+1}</option>)
             )}
             {/* Europa League */}
             {competicao === "EL" && (

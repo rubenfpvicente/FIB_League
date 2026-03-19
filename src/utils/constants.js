@@ -48,6 +48,21 @@ export const TIMES_CONF = [
   "🇽🇼 Wrexham"
 ];
 
+export const TIMES_NL = [
+  "🇩🇪 Alemanha",
+  "🇦🇷 Argentina",
+  "🇧🇷 Brasil",
+  "🇨🇴 Colômbia",
+  "🇭🇷 Croácia",
+  "🇪🇸 Espanha",
+  "🇫🇷 França",
+  "🇽🇪 Inglaterra",
+  "🇮🇹 Itália",
+  "🇳🇱 Países Baixos",
+  "🇵🇹 Portugal",
+  "🇺🇾 Uruguai"
+];
+
 export const TIMES_CUP = [ "🇬🇷 AEK Athens", "🇧🇪 Anderlecht", "🇽🇪 Aston Villa", "🇨🇭 Basel", "🇵🇹 Belenenses", "🇳🇴 Bodø/Glimt", "🇩🇪 Borussia Dortmund", "🇽🇸 Celtic", "🇪🇸 Celta de Vigo", "🇽🇪 Chelsea", "🇽🇪 Corinthian-Casuals", "🇩🇰 Copenhagen", "🇽🇪 Derby County", "🇰🇿 FC Astana", "🇭🇺 Ferencváros", "🇹🇷 Galatasaray", "🇩🇪 Hamburger SV", "🇮🇹 Internazionale", "🇮🇹 Juventus", "🇫🇴 KÍ Klaksvík", "🇪🇸 Las Palmas", "🇫🇷 Lens", "🇽🇪 Manchester City", "🇽🇪 Millwall", "🇫🇷 Monaco", "🇫🇷 Pau FC", "🇪🇸 Real Bétis", "🇪🇸 Real Madrid", "🇽🇼 Swansea City", "🇪🇸 Villarreal", "🇩🇪 Werder Bremen", "🇽🇪 West Ham" ];
 
 export const RODADAS_CUP = [
