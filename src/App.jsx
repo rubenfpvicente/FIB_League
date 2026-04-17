@@ -23,7 +23,11 @@ function App() {
 
   const getQtdJogos = () => {
     const { competicao, rodada } = config;
-    if (["L2", "L3", "L4"].includes(competicao)) return 10;
+    if (["L2", "L3"].includes(competicao)) return 10;
+
+    if (competicao === "L4") {
+      return 8;
+    }
 
     if (competicao === "NL") {
       return 6;
@@ -31,8 +35,8 @@ function App() {
 
     // Lógica da Cup
     if (competicao === "CUP") {
-      if (!isNaN(rodada) && parseInt(rodada) <= 5) return 18; // 6 Grupos x 3 jogos
-      if (rodada.includes("16 Avos")) return 16;
+      if (rodada === "Fase Preliminar") return 14;
+      if (!isNaN(rodada) && parseInt(rodada) <= 6 || rodada.includes("16 Avos")) return 16; // 6 Grupos x 3 jogos
       if (rodada.includes("Oitavas")) return 8;
       if (rodada.includes("Quartas")) return 4;
       if (rodada.includes("Semifinais")) return 2;
@@ -41,8 +45,8 @@ function App() {
 
     // Lógica da Europa League
     if (competicao === "EL" || competicao === "CONF") {
-      if (!isNaN(rodada) && parseInt(rodada) <= 5) return 12; // 6 Grupos x 2 jogos
-      if (rodada.includes("Oitavas")) return 8;
+      if (!isNaN(rodada) && parseInt(rodada) <= 6) return 15; // 6 Grupos x 2 jogos
+      if (rodada.includes("Playoff") || rodada.includes("Oitavas")) return 8;
       if (rodada.includes("Quartas")) return 4;
       if (rodada.includes("Semifinais")) return 2;
       if (rodada === "Final") return 1;

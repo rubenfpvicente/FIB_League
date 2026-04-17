@@ -1,52 +1,18 @@
 export const TIMES_L2 = [
-  "🇮🇹 AC Milan", "🇳🇱 Ajax", "🇧🇪 Anderlecht", "🇽🇪 Aston Villa", "🇩🇪 Bayern", "🇩🇪 Borussia Dortmund", "🇵🇹 Braga", "🇮🇹 Como", "🇰🇿 FC Astana", "🇵🇹 FC Porto", "🇫🇴 KÍ Klaksvík", "🇽🇪 Manchester City", "🇫🇷 Marseille", "🇫🇷 Monaco", "🇮🇹 Palermo", "🇫🇷 Paris Saint-Germain", "🇵🇹 Rio Ave", "🇪🇸 Sevilla", "🇽🇼 Swansea City", "🇽🇪 West Ham"
+  "🇮🇹 AC Milan", "🇬🇷 AEK Athens", "🇧🇪 Anderlecht", "🇩🇪 Bayern", "🇽🇪 Brighton","🇩🇪 Borussia Dortmund", "🇽🇪 Chelsea", "🇰🇿 FC Astana", "🇩🇪 Hamburger SV", "🇫🇷 Lens", "🇽🇪 Manchester City", "🇫🇷 Monaco", "🇮🇹 Parma", "🇫🇷 Paris Saint-Germain","🇳🇱 PSV", "🇽🇸 Rangers", "🇪🇸 Real Zaragoza", "🇽🇼 Swansea City", "🇽🇪 West Ham", "🇨🇭 Young Boys"
 ];
 
 export const TIMES_L3 = [
-  "🇽🇪 Arsenal", "🇵🇹 Benfica", "🇽🇪 Brighton", "🇪🇸 Celta de Vigo", "🇽🇸 Celtic", "🇽🇪 Chelsea", "🇽🇸 Dundee FC", "🇽🇪 Leicester City", "🇽🇪 Liverpool", "🇷🇺 Lokomotiv Moskva", "🇧🇬 Ludogorets", "🇽🇪 Millwall", "🇮🇹 Parma", "🇫🇷 Pau FC", "🇳🇱 PSV", "🇺🇦 Shakhtar Donetsk", "🇩🇪 Stuttgart", "🇩🇪 Werder Bremen", "🇽🇼 Wrexham", "🇨🇭 Young Boys"
+   "🇽🇪 Arsenal", "🇩🇪 Bayer Leverkusen", "🇪🇸 Barcelona",  "🇵🇹 Braga", "🇪🇸 Celta de Vigo", "🇽🇸 Celtic", "🇽🇸 Dundee FC", "🇮🇹 Juventus", "🇽🇪 Leicester City", "🇽🇪 Liverpool", "🇧🇬 Ludogorets", "🇽🇪 Millwall", "🇫🇷 Pau FC", "🇵🇹 Rio Ave", "🇪🇸 Sevilla", "🇺🇦 Shakhtar Donetsk", "🇳🇴 Tromsø", "🇪🇸 Villarreal", "🇩🇪 Werder Bremen", "🇽🇼 Wrexham"
 ];
 
 export const TIMES_L4 = [
-  "🇪🇸 Barcelona", "🇽🇪 Corinthian-Casuals", "🇵🇹 Fátima", "🇹🇷 Fenerbahçe", "🇮🇹 Fiorentina", "🇮🇹 Internazionale", "🇮🇹 Juventus", "🇦🇲 Pyunik Yerevan", "🇪🇸 Real Bétis", "🇪🇸 Real Madrid", "🇽🇪 Southampton", "🇩🇪 St. Pauli", "🇪🇸 Villarreal", "🇽🇪 Wolverhampton"
+  "🇪🇸 Atlético Madrid", "🇵🇹 Benfica", "🇽🇪 Birmingham City", "🇮🇹 Cagliari", "🇽🇪 Corinthian-Casuals", "🇵🇹 Fátima", "🇹🇷 Fenerbahçe", "🇮🇹 Fiorentina", "🇫🇷 Guingamp", "🇮🇹 Internazionale", "🇮🇹 Lazio", "🇷🇺 Lokomotiv Moskva", "🇪🇸 Real Bétis", "🇨🇿 Sparta Praha", "🇽🇪 Southampton", "🇩🇪 St. Pauli", "🇩🇪 Stuttgart", "🇽🇪 Wolverhampton"
 ];
 
-export const TIMES_EL = [
-  "🇬🇷 AEK Athens",
-  "🇧🇪 Anderlecht",
-  "🇵🇹 Braga",
-  "🇮🇹 Como",
-  "🇽🇸 Dundee FC",
-  "🇩🇪 Hamburger SV",
-  "🇫🇴 KÍ Klaksvík",
-  "🇪🇸 Las Palmas",
-  "🇽🇪 Liverpool",
-  "🇦🇲 Pyunik Yerevan",
-  "🇽🇸 Rangers",
-  "🇪🇸 Real Bétis",
-  "🇪🇸 Real Madrid",
-  "🇵🇹 Rio Ave",
-  "🇪🇸 Sevilla",
-  "🇽🇪 West Ham"
-];
+export const TIMES_EL = ["🇮🇹 AC Milan", "🇧🇪 Anderlecht", "🇪🇸 Atlético Madrid", "🇩🇪 Bayern", "🇳🇴 Bodø/Glimt", "🇪🇸 Celta de Vigo", "🇮🇹 Chievo Verona", "🇧🇪 Club Brugge", "🇽🇪 Corinthian-Casuals", "🇽🇸 Dundee FC", "🇭🇺 Ferencváros", "🇮🇹 Fiorentina", "🇵🇹 Fátima", "🇩🇪 Hamburger SV", "🇮🇹 Internazionale", "🇪🇸 Las Palmas", "🇽🇪 Leicester City", "🇫🇷 Lens", "🇽🇪 Liverpool", "🇽🇪 Manchester City", "🇽🇪 Millwall", "🇲🇨 Monaco", "🇫🇷 Paris Saint-Germain", "🇪🇸 Real Bétis", "🇲🇩 Sheriff Tiraspol", "🇽🇼 Swansea City", "🇩🇪 Werder Bremen", "🇽🇪🇪 West Ham", "🇽🇪 Wolverhampton", "🇽🇼 Wrexham"];
 
-export const TIMES_CONF = [
-  "🇨🇭 Basel",
-  "🇵🇹 Benfica",
-  "🇳🇴 Bodø/Glimt",
-  "🇽🇪 Brighton",
-  "🇽🇸 Celtic",
-  "🇽🇪 Corinthian-Casuals",
-  "🇵🇹 Fátima",
-  "🇰🇿 FC Astana",
-  "🇭🇺 Ferencváros",
-  "🇮🇹 Juventus",
-  "🇧🇬 Ludogorets",
-  "🇳🇱 PSV",
-  "🇽🇪 Southampton",
-  "🇩🇪 Stuttgart",
-  "🇪🇸 Villarreal",
-  "🇽🇼 Wrexham"
-];
+export const TIMES_CONF = ["🇬🇷 AEK Athens", "🇽🇪 Arsenal", "🇩🇪 Bayer Leverkusen", "🇵🇹 Benfica", "🇽🇪 Birmingham City", "🇩🇪 Borussia Dortmund", "🇮🇹 Cagliari", "🇽🇸 Celtic", "🇰🇿 FC Astana", "🇹🇷 Fenerbahçe", "🇫🇷 Guingamp", "🇮🇹 Lazio", "🇷🇺 Lokomotiv Moskva", "🇧🇬 Ludogorets", "🇫🇷 Pau FC", "🇽🇸 Rangers", "🇪🇸 Real Zaragoza", "🇵🇹 Rio Ave", "🇵🇹 SC Braga", "🇺🇦 Shakhtar Donetsk", "🇽🇪 Southampton", "🇨🇿 Sparta Praha", "🇩🇪 Stuttgart", "🇳🇴 Tromsø"];
 
 export const TIMES_NL = [
   "🇩🇪 Alemanha",
@@ -63,10 +29,11 @@ export const TIMES_NL = [
   "🇺🇾 Uruguai"
 ];
 
-export const TIMES_CUP = [ "🇬🇷 AEK Athens", "🇧🇪 Anderlecht", "🇽🇪 Aston Villa", "🇨🇭 Basel", "🇵🇹 Belenenses", "🇳🇴 Bodø/Glimt", "🇩🇪 Borussia Dortmund", "🇽🇸 Celtic", "🇪🇸 Celta de Vigo", "🇽🇪 Chelsea", "🇽🇪 Corinthian-Casuals", "🇩🇰 Copenhagen", "🇽🇪 Derby County", "🇰🇿 FC Astana", "🇭🇺 Ferencváros", "🇹🇷 Galatasaray", "🇩🇪 Hamburger SV", "🇮🇹 Internazionale", "🇮🇹 Juventus", "🇫🇴 KÍ Klaksvík", "🇪🇸 Las Palmas", "🇫🇷 Lens", "🇽🇪 Manchester City", "🇽🇪 Millwall", "🇫🇷 Monaco", "🇫🇷 Pau FC", "🇪🇸 Real Bétis", "🇪🇸 Real Madrid", "🇽🇼 Swansea City", "🇪🇸 Villarreal", "🇩🇪 Werder Bremen", "🇽🇪 West Ham" ];
+export const TIMES_CUP = ["🇪🇸 Atlético Madrid", "🇽🇪 Arsenal", "🇪🇸 Barcelona", "🇵🇹 Benfica", "🇽🇪 Birmingham City", "🇮🇹 Cagliari", "🇽🇸 Celtic", "🇽🇪 Corinthian-Casuals", "🇵🇹 Fátima", "🇹🇷 Fenerbahçe", "🇮🇹 Fiorentina", "🇫🇷 Guingamp", "🇮🇹 Internazionale", "🇮🇹 Juventus", "🇮🇹 Lazio", "🇷🇺 Lokomotiv Moskva", "🇧🇬 Ludogorets", "🇽🇪 Millwall", "🇫🇷 Pau FC", "🇪🇸 Real Bétis", "🇺🇦 Shakhtar Donetsk", "🇨🇿 Sparta Praha", "🇽🇪 Southampton", "🇩🇪 St. Pauli", "🇩🇪 Stuttgart", "🇪🇸 Villarreal", "🇩🇪 Werder Bremen", "🇽🇪 Wolverhampton"];
 
 export const RODADAS_CUP = [
-  "1", "2", "3", "4", "5",
+  "Fase Preliminar",
+  "1", "2", "3", "4", "5", "6",
   "16 Avos - Ida", "16 Avos - Volta",
   "Oitavas - Ida", "Oitavas - Volta", 
   "Quartas - Ida", "Quartas - Volta", 
@@ -75,17 +42,19 @@ export const RODADAS_CUP = [
 ];
 
 export const RODADAS_EL = [
-  "1", "2", "3", "4", "5",
-  "Oitavas de Final - Ida", "Oitavas de Final - Volta", 
-  "Quartas de Final - Ida", "Quartas de Final - Volta", 
+  "1", "2", "3", "4", "5", "6",
+  "Playoff - Ida", "Playoff - Volta",
+  "Oitavas - Ida", "Oitavas - Volta", 
+  "Quartas - Ida", "Quartas - Volta", 
   "Semifinais - Ida", "Semifinais - Volta", 
   "Final"
 ];
 
 export const RODADAS_CONF = [
-  "1", "2", "3", "4", "5",
-  "Oitavas de Final - Ida", "Oitavas de Final - Volta", 
-  "Quartas de Final - Ida", "Quartas de Final - Volta", 
+  "1", "2", "3", "4", "5", "6",
+  "Playoff - Ida", "Playoff - Volta",
+  "Oitavas - Ida", "Oitavas - Volta", 
+  "Quartas - Ida", "Quartas - Volta", 
   "Semifinais - Ida", "Semifinais - Volta", 
   "Final"
 ];
