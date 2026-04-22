@@ -26,7 +26,7 @@ function App() {
     if (["L2", "L3"].includes(competicao)) return 10;
 
     if (competicao === "L4") {
-      return 8;
+      return 9;
     }
 
     if (competicao === "NL") {
