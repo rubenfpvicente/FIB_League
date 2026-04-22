@@ -107,17 +107,6 @@ function App() {
 
     jogos.slice(0, getQtdJogos()).forEach((jogo, index) => {
       if (!jogo.time1 || !jogo.time2) return;
-      
-      if (isGrupos) {
-        // Europa League: Grupo muda a cada 2 jogos
-        if (competicao === "EL" && index % 2 === 0) {
-          output += `*Grupo ${["A","B","C","D","E","F"][Math.floor(index/2)]}*\n\n`;
-        }
-        // FIB Cup: Grupo muda a cada 3 jogos
-        if (competicao === "CUP" && index % 3 === 0) {
-          output += `*Grupo ${["A","B","C","D","E","F"][Math.floor(index/3)]}*\n\n`;
-        }
-      }
 
       const f = (t) => ({ flag: t.split(' ')[0], nome: t.replace(t.split(' ')[0], '').trim() });
       const t1 = f(jogo.time1); const t2 = f(jogo.time2);
