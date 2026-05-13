@@ -194,7 +194,7 @@ function App() {
               key={index} index={index} jogo={jogo} 
               onUpdate={handleUpdate} 
               times={listaTimesAtual()}
-              showIda={config.rodada.includes("Volta") || config.rodada === "Final"}
+              showIda={config.rodada.includes("Volta")}
             />
           ))}
         </section>
