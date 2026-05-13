@@ -3,7 +3,7 @@ import './index.css';
 import { ConfigHeader } from './components/ConfigHeader';
 import { MatchCard } from './components/MatchCard';
 import { ResultPreview } from './components/ResultPreview';
-import { TIMES_L2, TIMES_L3,TIMES_L4, TIMES_EL,TIMES_CONF, TIMES_CUP, TIMES_NL } from './utils/constants';
+import { TIMES_L2, TIMES_L3,TIMES_L4, TIMES_EL, TIMES_CONF, TIMES_CUP, TIMES_NL, TIMES_CUP_1, TIMES_CUP_2 } from './utils/constants';
 import { formatarNomeJogador, extrairPalpitesDoBloco } from './utils/formatters';
 
 function App() {
@@ -35,13 +35,15 @@ function App() {
 
     // Lógica da Cup
     if (competicao === "CUP") {
-      if (rodada === "Fase Preliminar") return 14;
-      if (!isNaN(rodada) && parseInt(rodada) <= 6 || rodada.includes("16 Avos")) return 16; // 6 Grupos x 3 jogos
+      if (rodada.includes("Fase Preliminar")) return 14;
+      if (rodada.includes("16 Avos")) return 16; // 6 Grupos x 3 jogos
       if (rodada.includes("Oitavas")) return 8;
       if (rodada.includes("Quartas")) return 4;
       if (rodada.includes("Semifinais")) return 2;
       if (rodada === "Final") return 1;
     }
+
+    if (competicao === "CUP_1" || competicao === "CUP_2") return 16; // 8 Grupos x 2 jogos
 
     // Lógica da Europa League
     if (competicao === "EL" || competicao === "CONF") {
@@ -68,7 +70,7 @@ function App() {
     let output = "";
     if (competicao === "EL") output = "🇪🇺 *FIB Europa League* 🇪🇺";
     else if (competicao === "CONF") output = "🇪🇺 *FIB Conference League* 🇪🇺";
-    else if (competicao === "CUP") output = "🇵🇭 FIB Cup 🇵🇭";
+    else if (competicao === "CUP_1" || competicao === "CUP_2" || competicao === "CUP") output = "🇵🇭 *FIB Cup* 🇵🇭";
     else if (competicao === "NL") output = "🇵🇭 *FIB Nations League* 🇵🇭";
     else output = `*🇵🇭 FIB League ${competicao.replace("L", "")} 🇵🇭*`;
 
@@ -107,6 +109,15 @@ function App() {
 
     jogos.slice(0, getQtdJogos()).forEach((jogo, index) => {
       if (!jogo.time1 || !jogo.time2) return;
+
+      // Adicionar nome do grupo a cada 2 jogos para CUP_1 e CUP_2
+      if ((competicao === "CUP_1" || competicao === "CUP_2") && index % 2 === 0) {
+        const grupos_cup1 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        const grupos_cup2 = ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
+        const grupos = competicao === "CUP_1" ? grupos_cup1 : grupos_cup2;
+        const grupoIndex = Math.floor(index / 2);
+        output += `*Grupo ${grupos[grupoIndex]}*\n\n`;
+      }
 
       const f = (t) => ({ flag: t.split(' ')[0], nome: t.replace(t.split(' ')[0], '').trim() });
       const t1 = f(jogo.time1); const t2 = f(jogo.time2);
@@ -166,6 +177,8 @@ function App() {
       case "EL": return TIMES_EL;
       case "CONF": return TIMES_CONF;
       case "CUP": return TIMES_CUP;
+      case "CUP_1": return TIMES_CUP_1;
+      case "CUP_2": return TIMES_CUP_2;
       case "NL": return TIMES_NL;
       default: return TIMES_L2;
     }

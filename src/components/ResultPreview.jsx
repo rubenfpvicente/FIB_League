@@ -1,7 +1,7 @@
 export const ResultPreview = ({ texto }) => {
   const copiar = () => {
     navigator.clipboard.writeText(texto);
-    alert("Copiado para o WhatsApp!");
+    alert("Resultado copiado para a área de transferência!");
   };
 
   return (

@@ -17,7 +17,9 @@ export const ConfigHeader = ({ config, setConfig }) => {
             <option value="L4">League 4</option>
             <option value="EL">Europa League</option>
             <option value="CONF">Conference League</option>
-            <option value="CUP">FIB Cup</option>
+            <option value="CUP_1">FIB Cup - Grupos A-H</option>
+            <option value="CUP_2">FIB Cup - Grupos I-P</option>
+            <option value="CUP">FIB Cup - Eliminatórias</option>
             <option value="NL">Nations League</option>
           </select>
         </div>
@@ -44,6 +46,10 @@ export const ConfigHeader = ({ config, setConfig }) => {
             {/* FIB Cup */}
             {competicao === "CUP" && (
               RODADAS_CUP.map(r => <option key={r} value={r}>{isNaN(r) ? r : `Rodada ${r}`}</option>)
+            )}
+            {/* FIB Cup Grupos */}
+            {(competicao === "CUP_1" || competicao === "CUP_2") && (
+              [...Array(6)].map((_, i) => <option key={i+1} value={i+1}>Rodada {i+1}</option>)
             )}
           </select>
         </div>
