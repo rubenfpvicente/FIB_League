@@ -42,7 +42,7 @@ body {
   gap: 5px;
 }
 
-.input-group input, .input-group select {
+.input-group input {
   padding: 8px;
   border-radius: 4px;
   border: none;
@@ -108,18 +108,6 @@ body {
   border: 1px solid #ddd;
 }
 
-.card-header {
-  margin-bottom: 15px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 5px;
-}
-
-.jogo-numero {
-  font-weight: bold;
-  color: var(--primary);
-  font-size: 0.8rem;
-}
-
 .selecao-confronto {
   display: flex;
   align-items: center;
@@ -132,12 +120,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-.time-col select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
 }
 
 .vs-badge {
@@ -204,25 +186,6 @@ textarea {
   gap: 5px;
 }
 
-.ida-input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ida-input input {
-  width: 40px;
-  text-align: center;
-  font-size: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-.ida-input small {
-  font-size: 0.6rem;
-  color: #666;
-  font-weight: bold;
-}
 
 .confrontos-input {
   width: min(620px, 70vw);

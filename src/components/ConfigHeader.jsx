@@ -4,7 +4,7 @@ export const ConfigHeader = ({ confrontosTexto, setConfrontosTexto, resultadoGlo
     <header className="main-header">
       <div className="config-row">
         <div className="input-group">
-          <label>Competição, rodada e confrontos:</label>
+          <label>Lista de confrontos:</label>
           <textarea
             className="confrontos-input"
             value={confrontosTexto}
@@ -14,7 +14,7 @@ export const ConfigHeader = ({ confrontosTexto, setConfrontosTexto, resultadoGlo
         </div>
 
         <div className="input-group">
-          <label>Global:</label>
+          <label>Resultados:</label>
           <input type="text" value={resultadoGlobal} onChange={(e) => setResultadoGlobal(e.target.value)} />
         </div>
       </div>

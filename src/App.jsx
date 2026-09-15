@@ -34,6 +34,8 @@ function App() {
   // O "Motor" de Cálculo via useMemo (Performance)
   const resultadoFormatado = useMemo(() => {
     const { competicao, titulo, rodada } = dadosConfrontos;
+    if (!titulo || !rodada || jogos.length === 0) return '';
+
     const resArray = resultadoGlobal
       .replace(/[()]/g, '/')
       .split('/')
@@ -41,13 +43,7 @@ function App() {
       .filter(s => s !== "");
     const isVolta = rodada.includes("Volta") || rodada === "Final";
 
-    let output = "";
-    if (titulo) output = `*${titulo}*`;
-    else if (competicao === "EL") output = "🇪🇺 *FIB Europa League* 🇪🇺";
-    else if (competicao === "CONF") output = "🇪🇺 *FIB Conference League* 🇪🇺";
-    else if (competicao === "CUP_1" || competicao === "CUP_2" || competicao === "CUP") output = "🇵🇭 *FIB Cup* 🇵🇭";
-    else if (competicao === "NL") output = "🇵🇭 *FIB Nations League* 🇵🇭";
-    else output = `*🇵🇭 FIB League ${competicao.replace("L", "")} 🇵🇭*`;
+    let output = `*${titulo}*`;
 
     const linhaSubtitulo = `*${rodada || 'Rodada'}*`;
 
