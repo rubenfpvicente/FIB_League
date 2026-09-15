@@ -41,7 +41,7 @@ function App() {
       .split('/')
       .map(s => s.trim())
       .filter(s => s !== "");
-    const isVolta = rodada.includes("Volta") || rodada === "Final";
+    const isVolta = rodada.includes("Volta") || rodada.includes("Final");
 
     let output = `*${titulo}*`;
 
