@@ -1,4 +1,11 @@
+import { formatarTimeParaExibicao } from '../utils/fixtures';
+
 export const ResultPreview = ({ texto }) => {
+  const textoVisual = texto
+    .split('\n')
+    .map((linha) => formatarTimeParaExibicao(linha))
+    .join('\n');
+
   const copiar = () => {
     navigator.clipboard.writeText(texto);
     alert("Resultado copiado para a área de transferência!");
@@ -12,7 +19,7 @@ export const ResultPreview = ({ texto }) => {
           <button className="copy-button" onClick={copiar}>Copiar</button>
         </div>
         <div className="preview-box">
-          <pre>{texto}</pre>
+          <pre>{textoVisual}</pre>
         </div>
       </div>
     </section>

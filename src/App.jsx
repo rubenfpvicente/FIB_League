@@ -1,19 +1,29 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import './index.css';
 import { ConfigHeader } from './components/ConfigHeader';
 import { MatchCard } from './components/MatchCard';
 import { ResultPreview } from './components/ResultPreview';
-import { TIMES_L2, TIMES_L3,TIMES_L4, TIMES_EL, TIMES_CONF, TIMES_CUP, TIMES_NL, TIMES_CUP_1, TIMES_CUP_2 } from './utils/constants';
 import { formatarNomeJogador, extrairPalpitesDoBloco } from './utils/formatters';
+import { lerConfrontos } from './utils/fixtures';
 
 function App() {
-  const [config, setConfig] = useState({ competicao: "L2", rodada: "1", resultadoGlobal: "" });
-  const [jogos, setJogos] = useState(
-    Array(18).fill(null).map(() => ({ 
-      time1: "", time2: "", equipe1Palpites: "", equipe2Palpites: "",
-      wo1: false, wo2: false, resultadoIda: "0-0"
-    }))
-  );
+  const [confrontosTexto, setConfrontosTexto] = useState('');
+  const [resultadoGlobal, setResultadoGlobal] = useState('');
+  const [jogos, setJogos] = useState([]);
+  const dadosConfrontos = useMemo(() => lerConfrontos(confrontosTexto), [confrontosTexto]);
+
+  useEffect(() => {
+    setJogos((anteriores) => {
+      const existentes = new Map(anteriores.map((jogo) => [`${jogo.time1}|${jogo.time2}`, jogo]));
+      return dadosConfrontos.confrontos.map(({ time1, time2, resultadoIda }) => {
+        const anterior = existentes.get(`${time1}|${time2}`);
+        return anterior ? { ...anterior, resultadoIda } : {
+          time1, time2, equipe1Palpites: '', equipe2Palpites: '',
+          wo1: false, wo2: false, resultadoIda,
+        };
+      });
+    });
+  }, [dadosConfrontos]);
 
   const handleUpdate = (index, field, value) => {
     const novos = [...jogos];
@@ -21,67 +31,25 @@ function App() {
     setJogos(novos);
   };
 
-  const getQtdJogos = () => {
-    const { competicao, rodada } = config;
-    if (["L2", "L3"].includes(competicao)) return 10;
-
-    if (competicao === "L4") {
-      return 9;
-    }
-
-    if (competicao === "NL") {
-      return 6;
-    }
-
-    // Lógica da Cup
-    if (competicao === "CUP") {
-      if (rodada.includes("Fase Preliminar")) return 14;
-      if (rodada.includes("16 Avos")) return 16; // 6 Grupos x 3 jogos
-      if (rodada.includes("Oitavas")) return 8;
-      if (rodada.includes("Quartas")) return 4;
-      if (rodada.includes("Semifinais")) return 2;
-      if (rodada === "Final") return 1;
-    }
-
-    if (competicao === "CUP_1" || competicao === "CUP_2") return 16; // 8 Grupos x 2 jogos
-
-    // Lógica da Europa League
-    if (competicao === "EL" || competicao === "CONF") {
-      if (!isNaN(rodada) && parseInt(rodada) <= 6) return 15; // 6 Grupos x 2 jogos
-      if (rodada.includes("Playoff") || rodada.includes("Oitavas")) return 8;
-      if (rodada.includes("Quartas")) return 4;
-      if (rodada.includes("Semifinais")) return 2;
-      if (rodada === "Final") return 1;
-    }
-    return 10;
-  };
-
   // O "Motor" de Cálculo via useMemo (Performance)
   const resultadoFormatado = useMemo(() => {
-    const { competicao, rodada, resultadoGlobal } = config;
+    const { competicao, titulo, rodada } = dadosConfrontos;
     const resArray = resultadoGlobal
       .replace(/[()]/g, '/')
       .split('/')
       .map(s => s.trim())
       .filter(s => s !== "");
     const isVolta = rodada.includes("Volta") || rodada === "Final";
-    const isGrupos = competicao === "EL" && !isNaN(rodada) && parseInt(rodada) <= 5;
 
     let output = "";
-    if (competicao === "EL") output = "🇪🇺 *FIB Europa League* 🇪🇺";
+    if (titulo) output = `*${titulo}*`;
+    else if (competicao === "EL") output = "🇪🇺 *FIB Europa League* 🇪🇺";
     else if (competicao === "CONF") output = "🇪🇺 *FIB Conference League* 🇪🇺";
     else if (competicao === "CUP_1" || competicao === "CUP_2" || competicao === "CUP") output = "🇵🇭 *FIB Cup* 🇵🇭";
     else if (competicao === "NL") output = "🇵🇭 *FIB Nations League* 🇵🇭";
     else output = `*🇵🇭 FIB League ${competicao.replace("L", "")} 🇵🇭*`;
 
-    const ehRodadaNumerica = !isNaN(rodada);
-
-    let linhaSubtitulo = "";
-    if (ehRodadaNumerica) {
-      linhaSubtitulo = `*Rodada ${rodada}*`;
-    } else {
-      linhaSubtitulo = `*${rodada}*`; // Aqui entra "Oitavas - Ida", "Final", etc.
-    }
+    const linhaSubtitulo = `*${rodada || 'Rodada'}*`;
 
     output += `\n\n${linhaSubtitulo}\n\n`;
 
@@ -107,7 +75,7 @@ function App() {
       return { gols, lista };
     };
 
-    jogos.slice(0, getQtdJogos()).forEach((jogo, index) => {
+    jogos.forEach((jogo, index) => {
       if (!jogo.time1 || !jogo.time2) return;
 
       // Adicionar nome do grupo a cada 2 jogos para CUP_1 e CUP_2
@@ -167,34 +135,22 @@ function App() {
       output += `\n`;
     });
     return output.trim();
-  }, [config, jogos]);
-
-  const listaTimesAtual = () => {
-    switch(config.competicao) {
-      case "L2": return TIMES_L2;
-      case "L3": return TIMES_L3;
-      case "L4": return TIMES_L4;
-      case "EL": return TIMES_EL;
-      case "CONF": return TIMES_CONF;
-      case "CUP": return TIMES_CUP;
-      case "CUP_1": return TIMES_CUP_1;
-      case "CUP_2": return TIMES_CUP_2;
-      case "NL": return TIMES_NL;
-      default: return TIMES_L2;
-    }
-  };
+  }, [dadosConfrontos, jogos, resultadoGlobal]);
 
   return (
     <div className="app-wrapper">
-      <ConfigHeader config={config} setConfig={setConfig} />
+      <ConfigHeader
+        confrontosTexto={confrontosTexto}
+        setConfrontosTexto={setConfrontosTexto}
+        resultadoGlobal={resultadoGlobal}
+        setResultadoGlobal={setResultadoGlobal}
+      />
       <main className="main-content">
         <section className="inputs-section">
-          {jogos.slice(0, getQtdJogos()).map((jogo, index) => (
+          {jogos.map((jogo, index) => (
             <MatchCard 
               key={index} index={index} jogo={jogo} 
               onUpdate={handleUpdate} 
-              times={listaTimesAtual()}
-              showIda={config.rodada.includes("Volta")}
             />
           ))}
         </section>

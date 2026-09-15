@@ -33,6 +33,7 @@ body {
   display: flex;
   gap: 30px;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .input-group {
@@ -221,4 +222,12 @@ textarea {
   font-size: 0.6rem;
   color: #666;
   font-weight: bold;
+}
+
+.confrontos-input {
+  width: min(620px, 70vw);
+  height: 150px;
+  box-sizing: border-box;
+  background: white;
+  color: #222;
 }
