@@ -16,6 +16,12 @@ const BANDEIRAS_BRITANICAS_VISUAIS = {
   paisDeGales: '🇽🇼',
 };
 
+const CODIGOS_BANDEIRAS_BRITANICAS = {
+  inglaterra: 'gb-eng',
+  escocia: 'gb-sct',
+  paisDeGales: 'gb-wls',
+};
+
 const TIMES_BRITANICOS = {
   inglaterra: new Set([
     'arsenal', 'aston villa', 'birmingham city', 'brighton', 'chelsea', 'corinthian-casuals',
@@ -39,6 +45,29 @@ export const formatarTimeParaExibicao = (time) => {
   const pais = Object.keys(BANDEIRAS_BRITANICAS)
     .find((chave) => time.includes(BANDEIRAS_BRITANICAS[chave]));
   return pais ? time.replace(BANDEIRAS_BRITANICAS[pais], BANDEIRAS_BRITANICAS_VISUAIS[pais]) : time;
+};
+
+const obterCodigoDaBandeira = (bandeira) => {
+  const paisBritanico = Object.keys(BANDEIRAS_BRITANICAS)
+    .find((chave) => bandeira === BANDEIRAS_BRITANICAS[chave]);
+  if (paisBritanico) return CODIGOS_BANDEIRAS_BRITANICAS[paisBritanico];
+
+  const indicadores = Array.from(bandeira)
+    .map((caractere) => caractere.codePointAt(0))
+    .filter((codigo) => codigo >= 0x1F1E6 && codigo <= 0x1F1FF);
+
+  return indicadores.length === 2
+    ? String.fromCodePoint(...indicadores.map((codigo) => codigo - 0x1F1E6 + 97))
+    : null;
+};
+
+export const separarTime = (time) => {
+  const [bandeira, ...partesDoNome] = time.split(' ');
+  const codigoBandeira = obterCodigoDaBandeira(bandeira);
+
+  return codigoBandeira
+    ? { codigoBandeira, nome: partesDoNome.join(' ') }
+    : { codigoBandeira: null, nome: time };
 };
 
 // Aceita bandeira antes ou depois do nome, mas guarda-a sempre antes do time.
