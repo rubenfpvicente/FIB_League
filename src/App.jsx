@@ -15,11 +15,11 @@ function App() {
   useEffect(() => {
     setJogos((anteriores) => {
       const existentes = new Map(anteriores.map((jogo) => [`${jogo.time1}|${jogo.time2}`, jogo]));
-      return dadosConfrontos.confrontos.map(({ time1, time2, resultadoIda }) => {
+      return dadosConfrontos.confrontos.map(({ time1, time2, resultadoIda, grupo }) => {
         const anterior = existentes.get(`${time1}|${time2}`);
-        return anterior ? { ...anterior, resultadoIda } : {
+        return anterior ? { ...anterior, resultadoIda, grupo } : {
           time1, time2, equipe1Palpites: '', equipe2Palpites: '',
-          wo1: false, wo2: false, resultadoIda,
+          wo1: false, wo2: false, resultadoIda, grupo,
         };
       });
     });
@@ -33,7 +33,7 @@ function App() {
 
   // O "Motor" de Cálculo via useMemo (Performance)
   const resultadoFormatado = useMemo(() => {
-    const { competicao, titulo, rodada } = dadosConfrontos;
+    const { titulo, rodada, subtitulos } = dadosConfrontos;
     if (!titulo || !rodada || jogos.length === 0) return '';
 
     const resArray = resultadoGlobal
@@ -48,9 +48,10 @@ function App() {
     const linhaSubtitulo = `*${rodada || 'Rodada'}*`;
 
     output += `\n\n${linhaSubtitulo}\n\n`;
+    if (subtitulos.length > 0) output += `${subtitulos.map((subtitulo) => `*${subtitulo}*`).join('\n\n')}\n\n`;
 
     const calcular = (txt, wo, start, end) => {
-      if (wo) return { gols: 0, lista: ["*WO*"] };
+      if (wo) return { gols: 0, lista: ['WO'] };
       const texto = extrairPalpitesDoBloco(txt);
       const linhas = texto.split('\n').map(l => l.trim()).filter(l => l !== "");
       let gols = 0; let lista = [];
@@ -71,28 +72,28 @@ function App() {
       return { gols, lista };
     };
 
-    jogos.forEach((jogo, index) => {
+    let grupoAnterior = '';
+    jogos.forEach((jogo) => {
       if (!jogo.time1 || !jogo.time2) return;
 
-      // Adicionar nome do grupo a cada 2 jogos para CUP_1 e CUP_2
-      if ((competicao === "CUP_1" || competicao === "CUP_2") && index % 2 === 0) {
-        const grupos_cup1 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-        const grupos_cup2 = ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
-        const grupos = competicao === "CUP_1" ? grupos_cup1 : grupos_cup2;
-        const grupoIndex = Math.floor(index / 2);
-        output += `*Grupo ${grupos[grupoIndex]}*\n\n`;
+      if (jogo.grupo && jogo.grupo !== grupoAnterior) {
+        output += `*${jogo.grupo}*\n\n`;
+        grupoAnterior = jogo.grupo;
       }
 
       const f = (t) => ({ flag: t.split(' ')[0], nome: t.replace(t.split(' ')[0], '').trim() });
       const t1 = f(jogo.time1); const t2 = f(jogo.time2);
       
-      const r1 = calcular(jogo.equipe1Palpites, jogo.wo1, 0, 4);
-      const r2 = calcular(jogo.equipe2Palpites, jogo.wo2, 0, 4);
+      let r1 = calcular(jogo.equipe1Palpites, jogo.wo1, 0, 4);
+      let r2 = calcular(jogo.equipe2Palpites, jogo.wo2, 0, 4);
+
+      if (jogo.wo1 && !jogo.wo2) r2 = { gols: 1, lista: ['⚽'] };
+      if (jogo.wo2 && !jogo.wo1) r1 = { gols: 1, lista: ['⚽'] };
 
       const [ida1, ida2] = jogo.resultadoIda.split('-').map(n => parseInt(n) || 0);
       const aggN1 = r1.gols + ida1; const aggN2 = r2.gols + ida2;
 
-      let houveP = isVolta && aggN1 === aggN2 && resArray.length > 5;
+      let houveP = isVolta && !jogo.wo1 && !jogo.wo2 && aggN1 === aggN2 && resArray.length > 5;
       let rp1 = { gols: 0, lista: [] }, rp2 = { gols: 0, lista: [] };
       
       if (houveP) {

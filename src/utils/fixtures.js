@@ -54,19 +54,6 @@ const normalizarTime = (time) => {
   return corrigirBandeiraBritanica(timeNormalizado);
 };
 
-const identificarCompeticao = (titulo) => {
-  const texto = titulo.toLowerCase();
-  if (texto.includes('conference')) return 'CONF';
-  if (texto.includes('europa league')) return 'EL';
-  if (texto.includes('nations league')) return 'NL';
-  if (texto.includes('cup') && /grupos?\s*(a\s*[-–]\s*h|a\s*[-–]\s*h)/i.test(titulo)) return 'CUP_1';
-  if (texto.includes('cup') && /grupos?\s*(i\s*[-–]\s*p|i\s*[-–]\s*p)/i.test(titulo)) return 'CUP_2';
-  if (texto.includes('cup')) return 'CUP';
-
-  const league = texto.match(/league\s*(\d+)/i);
-  return league ? `L${league[1]}` : 'L2';
-};
-
 // Lê o formato publicado no WhatsApp: título, rodada e uma linha "Time vs Time" por jogo.
 export const lerConfrontos = (bloco) => {
   const linhas = bloco
@@ -74,27 +61,37 @@ export const lerConfrontos = (bloco) => {
     .map(normalizar)
     .filter(Boolean);
 
-  const confrontos = linhas
-    .filter((linha) => /\s+vs\s+/i.test(linha))
-    .map((linha) => {
+  let grupoAtual = '';
+  const confrontos = linhas.reduce((lista, linha) => {
+    if (/^grupo\s+[a-z0-9]+$/i.test(linha)) {
+      grupoAtual = linha;
+      return lista;
+    }
+
+    if (/\s+vs\s+/i.test(linha)) {
       const resultadoIda = linha.match(/\((\d+\s*-\s*\d+)\)\s*$/)?.[1]?.replace(/\s/g, '');
       const confrontoSemIda = linha.replace(/\s*\(\d+\s*-\s*\d+\)\s*$/, '');
       const [time1, time2] = confrontoSemIda.split(/\s+vs\s+/i).map((time) => time.trim());
-      return time1 && time2
-        ? { time1: normalizarTime(time1), time2: normalizarTime(time2), resultadoIda: resultadoIda || '0-0' }
-        : null;
-    })
-    .filter(Boolean);
+      if (time1 && time2) {
+        lista.push({
+          time1: normalizarTime(time1), time2: normalizarTime(time2),
+          resultadoIda: resultadoIda || '0-0', grupo: grupoAtual,
+        });
+      }
+    }
+    return lista;
+  }, []);
 
   const primeiraLinhaDeJogo = linhas.findIndex((linha) => /\s+vs\s+/i.test(linha));
   const cabecalho = primeiraLinhaDeJogo === -1 ? linhas : linhas.slice(0, primeiraLinhaDeJogo);
   const titulo = cabecalho[0] || '';
   const rodada = cabecalho[1] || '';
+  const subtitulos = cabecalho.slice(2).filter((linha) => !/^grupo\s+[a-z0-9]+$/i.test(linha));
 
   return {
-    competicao: identificarCompeticao(titulo),
     titulo,
     rodada,
+    subtitulos,
     confrontos,
   };
 };
