@@ -87,8 +87,8 @@ function App() {
       let r1 = calcular(jogo.equipe1Palpites, jogo.wo1, 0, 4);
       let r2 = calcular(jogo.equipe2Palpites, jogo.wo2, 0, 4);
 
-      if (jogo.wo1 && !jogo.wo2) r2 = { gols: 1, lista: ['⚽'] };
-      if (jogo.wo2 && !jogo.wo1) r1 = { gols: 1, lista: ['⚽'] };
+      if (jogo.wo1 && !jogo.wo2 && r2.gols === 0) r2 = { gols: 1, lista: ['⚽'] };
+      if (jogo.wo2 && !jogo.wo1 && r1.gols === 0) r1 = { gols: 1, lista: ['⚽'] };
 
       const [ida1, ida2] = jogo.resultadoIda.split('-').map(n => parseInt(n) || 0);
       const aggN1 = r1.gols + ida1; const aggN2 = r2.gols + ida2;
